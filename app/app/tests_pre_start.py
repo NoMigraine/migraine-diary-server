@@ -1,13 +1,18 @@
 import logging
+import os
+import sys
 
 from tenacity import after_log, before_log, retry, stop_after_attempt, wait_fixed
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, BASE_DIR)
 
 from app.db.session import SessionLocal
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-max_tries = 60 * 5  # 5 minutes
+max_tries = 15  # 5 minutes
 wait_seconds = 1
 
 

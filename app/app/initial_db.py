@@ -1,26 +1,24 @@
 import logging
 import os
+import sqlite3
 import sys
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, BASE_DIR)
-
-from app.db.init_db import init_db
-from app.db.session import SessionLocal
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
 def init() -> None:
-    db = SessionLocal()
-    init_db(db)
+    conn = sqlite3.connect('test.db')
+    conn.close()
 
 
 def main() -> None:
-    logger.info("Creating initial data")
+    logger.info("Creating db")
     init()
-    logger.info("Initial data created")
+    logger.info("Initial db created")
 
 
 if __name__ == "__main__":
