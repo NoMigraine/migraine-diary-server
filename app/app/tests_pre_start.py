@@ -7,7 +7,7 @@ from tenacity import after_log, before_log, retry, stop_after_attempt, wait_fixe
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, BASE_DIR)
 
-from app.db.session import SessionLocal
+from app.db.session import SessionLocal  # noqa
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)

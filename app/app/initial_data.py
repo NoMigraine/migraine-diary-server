@@ -5,8 +5,8 @@ import sys
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, BASE_DIR)
 
-from app.db.init_db import init_db
-from app.db.session import SessionLocal
+from app.db.init_db import init_db  # noqa
+from app.db.session import SessionLocal  # noqa
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
