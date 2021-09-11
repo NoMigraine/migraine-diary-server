@@ -1,0 +1,20 @@
+name: Test
+on: push
+jobs:
+  qa:
+    name: Quality check
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v1
+      - name: Set up Python
+        uses: actions/setup-python@master
+        with:
+          python-version: 3.9
+      - name: Run flake8 and unit tests
+        run: |
+          pip install poetry
+          POETRY_VIRTUALENVS_CREATE=false poetry install
+          PYTHONPATH=/app
+          flake8
+          cd app/
+          sh tests-start.sh
