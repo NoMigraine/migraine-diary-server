@@ -25,7 +25,6 @@ fileConfig(config.config_file_name)
 # from app.db.base import Base  # noqa
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 sys.path.insert(0, BASE_DIR)
 
 from app.db.base_class import Base  # noqa
@@ -40,11 +39,14 @@ target_metadata = Base.metadata
 
 
 def get_url():
-    user = settings.POSTGRES_USER
-    password = settings.POSTGRES_PASSWORD
-    server = settings.POSTGRES_SERVER
-    db = settings.POSTGRES_DB
-    return f"postgresql://{user}:{password}@{server}/{db}"
+    if os.environ.get('DEPLOY_ENV') == 'TEST':
+        return 'sqlite:///test.db'
+    else:
+        user = settings.POSTGRES_USER
+        password = settings.POSTGRES_PASSWORD
+        server = settings.POSTGRES_SERVER
+        db = settings.POSTGRES_DB
+        return f"postgresql://{user}:{password}@{server}/{db}"
 
 
 def run_migrations_offline():

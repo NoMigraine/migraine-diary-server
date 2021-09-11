@@ -17,4 +17,4 @@ jobs:
           PYTHONPATH=/app
           flake8
           cd app/
-          sh scripts/test.sh
+          sh tests-start.sh
