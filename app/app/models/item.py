@@ -1,11 +1,11 @@
 from typing import TYPE_CHECKING
 
 from sqlalchemy import Column
+from sqlalchemy import DateTime
 from sqlalchemy import ForeignKey
 from sqlalchemy import Integer
 from sqlalchemy import String
 from sqlalchemy import Table
-from sqlalchemy import DateTime
 from sqlalchemy.orm import relationship
 
 from app.db.base_class import Base
