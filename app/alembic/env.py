@@ -1,11 +1,17 @@
+"""isort:skip_file"""
 from __future__ import with_statement
 
 import os
 import sys
 
+
 from alembic import context
 from sqlalchemy import engine_from_config, pool
 from logging.config import fileConfig
+
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, BASE_DIR)
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -22,15 +28,13 @@ fileConfig(config.config_file_name)
 # target_metadata = mymodel.Base.metadata
 # target_metadata = None
 
-# from app.db.base import Base  # noqa
+from app.db.base import Base  # noqa
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.insert(0, BASE_DIR)
-
-from app.db.base_class import Base  # noqa
-from app.core.config import settings # noqa
+from app.core.config import settings  # noqa isort:skip
+from app.db.base_class import Base  # noqa isort:skip
 
 target_metadata = Base.metadata
+
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
@@ -39,8 +43,8 @@ target_metadata = Base.metadata
 
 
 def get_url():
-    if os.environ.get('DEPLOY_ENV') == 'TEST':
-        return 'sqlite:///test.db'
+    if os.environ.get("DEPLOY_ENV") == "TEST":
+        return "sqlite:///test.db"
     else:
         user = settings.POSTGRES_USER
         password = settings.POSTGRES_PASSWORD
