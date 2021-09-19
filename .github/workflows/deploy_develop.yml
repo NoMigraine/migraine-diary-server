@@ -1,0 +1,42 @@
+name: Delopy
+on:
+  pull_request:
+    branches:
+      - develop
+jobs:
+  test:
+    name: Quality check
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v1
+      - name: Set up Python
+        uses: actions/setup-python@master
+        with:
+          python-version: 3.9
+      - name: Run flake8 and unit tests
+        run: |
+          pip install poetry
+          POETRY_VIRTUALENVS_CREATE=false poetry install
+          PYTHONPATH=/app
+          flake8
+          cd app/
+          sh tests-start.sh
+
+  deploy:
+    needs: [ test ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: init ssh, deploy
+        run: |
+          eval $(ssh-agent -s)
+          echo "${{secrets.SERVER_SSH_PRIV_KEY}}" > deploy.key
+          mkdir -p ~/.ssh
+          chmod 0600 deploy.key
+          ssh-add deploy.key
+          echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+          - echo ${{secrets.SERVER_IP}}
+          ssh root@${{secrets.SERVER_IP}} "rm -rf /tmp/migraine-diary-server && cd /tmp && git clone --branch develop --single-branch --depth=1 git@github.com:NoMigraine/migraine-diary-server.git"
+          ssh root@${{secrets.SERVER_IP}} "cd /tmp/migraine-diary-server && docker build . -t migraine-diary-server-img"
+          ssh root@${{secrets.SERVER_IP}} "docker rm -f migraine-diary-server || true"
+          ssh root@${{secrets.SERVER_IP}} "docker run -d -e DEPLOY_ENV=PREHUB --restart=on-failure:1 -p 7810:80 -p 7811:7782 --name migraine-diary-server migraine-diary-server-img"
+          ssh root@${{secrets.SERVER_IP}} "docker image prune -f && docker rm $(docker ps -q -f status=exited) || true"

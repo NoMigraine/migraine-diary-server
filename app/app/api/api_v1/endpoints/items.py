@@ -1,9 +1,14 @@
-from typing import Any, List
+from typing import Any
+from typing import List
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter
+from fastapi import Depends
+from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
-from app import crud, models, schemas
+from app import crud
+from app import models
+from app import schemas
 from app.api import deps
 
 router = APIRouter()
@@ -28,7 +33,7 @@ def read_items(
     return items
 
 
-@router.post("/", response_model=schemas.Item)
+@router.post("/", response_model=schemas.Item, name='创建新记录')
 def create_item(
     *,
     db: Session = Depends(deps.get_db),
@@ -36,7 +41,7 @@ def create_item(
     current_user: models.User = Depends(deps.get_current_active_user),
 ) -> Any:
     """
-    Create new item.
+    创建新记录的时候*_tag对象只需要传入id
     """
     item = crud.item.create_with_owner(db=db, obj_in=item_in, owner_id=current_user.id)
     return item

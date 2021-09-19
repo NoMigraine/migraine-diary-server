@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 
 
 def init() -> None:
-    conn = sqlite3.connect('test.db')
+    conn = sqlite3.connect("test.db")
     conn.close()
 
 

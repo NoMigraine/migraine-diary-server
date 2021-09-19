@@ -1,8 +1,17 @@
 import os
 import secrets
-from typing import Any, Dict, List, Optional, Union
+from typing import Any
+from typing import Dict
+from typing import List
+from typing import Optional
+from typing import Union
 
-from pydantic import AnyHttpUrl, BaseSettings, EmailStr, HttpUrl, PostgresDsn, validator
+from pydantic import AnyHttpUrl
+from pydantic import BaseSettings
+from pydantic import EmailStr
+from pydantic import HttpUrl
+from pydantic import PostgresDsn
+from pydantic import validator
 
 
 class Settings(BaseSettings):
@@ -87,19 +96,20 @@ class Settings(BaseSettings):
         case_sensitive = True
 
         current_path = os.path.abspath(__file__)
-        config_file_path = os.path.join(os.path.abspath(os.path.dirname(current_path) + os.path.sep), '')
+        config_file_path = os.path.join(
+            os.path.abspath(os.path.dirname(current_path) + os.path.sep), ""
+        )
         env_file_encoding = "utf-8"
 
-        if os.environ.get('DEPLOY_ENV') == 'PRODUCTION':
-            env_file = config_file_path + 'prod.env'
-            print('———————— 生产环境 ————————')
-        elif os.environ.get('DEPLOY_ENV') == 'PREHUB':
-            env_file = config_file_path + 'prehub.env'
-            print('———————— 预发布环境 ————————')
+        if os.environ.get("DEPLOY_ENV") == "PRODUCTION":
+            env_file = config_file_path + "prod.env"
+            print("———————— 生产环境 ————————")
+        elif os.environ.get("DEPLOY_ENV") == "PREHUB":
+            env_file = config_file_path + "prehub.env"
+            print("———————— 预发布环境 ————————")
         else:
-            env_file = config_file_path + '.env'
-            print('———————— 开发环境 ————————')
-        env_file_encoding = 'utf-8'
+            env_file = config_file_path + ".env"
+        env_file_encoding = "utf-8"
 
 
 settings = Settings()
