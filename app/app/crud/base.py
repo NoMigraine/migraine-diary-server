@@ -7,6 +7,7 @@ from typing import Type
 from typing import TypeVar
 from typing import Union
 
+from fastapi import HTTPException
 from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
@@ -32,6 +33,12 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
 
     def get(self, db: Session, id: Any) -> Optional[ModelType]:
         return db.query(self.model).filter(self.model.id == id).first()
+
+    def get_or_404(self, db: Session, id: Any) -> Optional[ModelType]:
+        rs = db.query(self.model).filter(self.model.id == id, self.model.is_del == 0).first()
+        if not rs:
+            raise HTTPException(status_code=404, detail="没有id为{}的数据".format(id))
+        return rs
 
     def get_multi(
         self, db: Session, *, skip: int = 0, limit: int = 100

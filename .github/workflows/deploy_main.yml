@@ -1,0 +1,43 @@
+name: Delopy
+on:
+  pull_request:
+    branches:
+      - main
+jobs:
+  test:
+    name: Quality check
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v1
+      - name: Set up Python
+        uses: actions/setup-python@master
+        with:
+          python-version: 3.9
+      - name: Run flake8 and unit tests
+        run: |
+          pip install poetry
+          POETRY_VIRTUALENVS_CREATE=false poetry install
+          PYTHONPATH=/app
+          flake8
+          cd app/
+          sh tests-start.sh
+
+  deploy:
+    needs: [ test ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: init ssh, deploy
+        run: |
+          eval $(ssh-agent -s)
+          echo "${{secrets.SERVER_SSH_PRIV_KEY}}" > deploy.key
+          mkdir -p ~/.ssh
+          chmod 0600 deploy.key
+          ssh-add deploy.key
+          echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+          ssh root@${{secrets.SERVER_IP}} "cd /your/workspace/path && sh update.sh "
+          - echo ${{secrets.SERVER_IP}}
+          ssh root@${{secrets.SERVER_IP}} "rm -rf /tmp/pinstreet_open_service_backend && cd /tmp && git clone --branch prehub --single-branch --depth=1 git@gitlab.citydnatech.com:pinstreet/pinstreet-open-service/pinstreet_open_service_backend.git"
+          ssh root@${{secrets.SERVER_IP}} "cd /tmp/pinstreet_open_service_backend && docker build . -t pinstreet_open_service_backend-img"
+          ssh root@${{secrets.SERVER_IP}} "docker rm -f pinstreet_open_service_backend || true"
+          ssh root@${{secrets.SERVER_IP}} "docker run -d -e DEPLOY_ENV=PREHUB -e SERVER_NODE=MAIN_NODE --restart=on-failure:1 -p 7810:80 -p 7811:7782 --name pinstreet_open_service_backend pinstreet_open_service_backend-img"
+          ssh root@${{secrets.SERVER_IP}} "docker image prune -f && docker rm $(docker ps -q -f status=exited) || true"

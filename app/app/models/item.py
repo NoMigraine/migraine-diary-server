@@ -17,7 +17,6 @@ if TYPE_CHECKING:
 item_feel_tag = Table(
     "item_feel_tag",
     Base.metadata,
-    Column("id", Integer, primary_key=True),
     Column("item_id", Integer, ForeignKey("item.id"), nullable=False, primary_key=True),
     Column(
         "feel_tag_id",
@@ -31,7 +30,6 @@ item_feel_tag = Table(
 item_foreboding_tag = Table(
     "item_foreboding_tag",
     Base.metadata,
-    Column("id", Integer, primary_key=True),
     Column("item_id", Integer, ForeignKey("item.id"), nullable=False, primary_key=True),
     Column(
         "foreboding_tag_id",
@@ -45,7 +43,6 @@ item_foreboding_tag = Table(
 item_triggers_tag = Table(
     "item_triggers_tag",
     Base.metadata,
-    Column("id", Integer, primary_key=True),
     Column("item_id", Integer, ForeignKey("item.id"), nullable=False, primary_key=True),
     Column(
         "triggers_tag_id",
@@ -59,7 +56,6 @@ item_triggers_tag = Table(
 item_complication_tag = Table(
     "item_complication_tag",
     Base.metadata,
-    Column("id", Integer, primary_key=True),
     Column("item_id", Integer, ForeignKey("item.id"), nullable=False, primary_key=True),
     Column(
         "complication_tag_id",
@@ -73,7 +69,6 @@ item_complication_tag = Table(
 item_affect_tag = Table(
     "item_affect_tag_tag",
     Base.metadata,
-    Column("id", Integer, primary_key=True),
     Column("item_id", Integer, ForeignKey("item.id"), nullable=False, primary_key=True),
     Column(
         "affect_tag_id",
@@ -87,7 +82,6 @@ item_affect_tag = Table(
 item_relief_pain_tag = Table(
     "item_relief_pain_tag",
     Base.metadata,
-    Column("id", Integer, primary_key=True),
     Column("item_id", Integer, ForeignKey("item.id"), nullable=False, primary_key=True),
     Column(
         "reliefpain_tag_id",
@@ -101,7 +95,6 @@ item_relief_pain_tag = Table(
 item_drug_tag = Table(
     "item_drug_tag",
     Base.metadata,
-    Column("id", Integer, primary_key=True),
     Column("item_id", Integer, ForeignKey("item.id"), nullable=False, primary_key=True),
     Column(
         "drug_tag_id",
@@ -115,7 +108,6 @@ item_drug_tag = Table(
 item_treatment_tag = Table(
     "item_treatment_tag",
     Base.metadata,
-    Column("id", Integer, primary_key=True),
     Column("item_id", Integer, ForeignKey("item.id"), nullable=False, primary_key=True),
     Column(
         "treatment_tag_id",
@@ -129,7 +121,6 @@ item_treatment_tag = Table(
 item_emotions_tag = Table(
     "item_emotions_tag",
     Base.metadata,
-    Column("id", Integer, primary_key=True),
     Column("item_id", Integer, ForeignKey("item.id"), nullable=False, primary_key=True),
     Column(
         "emotions_tag_id",

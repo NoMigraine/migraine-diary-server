@@ -1,8 +1,8 @@
 """init db
 
-Revision ID: c9c296689c2a
+Revision ID: 706236b4fa75
 Revises: 
-Create Date: 2021-09-13 22:27:00.932290
+Create Date: 2021-09-19 23:49:52.331525
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'c9c296689c2a'
+revision = '706236b4fa75'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -123,76 +123,67 @@ def upgrade():
     op.create_index(op.f('ix_item_id'), 'item', ['id'], unique=False)
     op.create_index(op.f('ix_item_title'), 'item', ['title'], unique=False)
     op.create_table('item_affect_tag_tag',
-    sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('item_id', sa.Integer(), nullable=False),
     sa.Column('affect_tag_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['affect_tag_id'], ['affect_tag.id'], ),
     sa.ForeignKeyConstraint(['item_id'], ['item.id'], ),
-    sa.PrimaryKeyConstraint('id', 'item_id', 'affect_tag_id')
+    sa.PrimaryKeyConstraint('item_id', 'affect_tag_id')
     )
     op.create_table('item_complication_tag',
-    sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('item_id', sa.Integer(), nullable=False),
     sa.Column('complication_tag_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['complication_tag_id'], ['complication_tag.id'], ),
     sa.ForeignKeyConstraint(['item_id'], ['item.id'], ),
-    sa.PrimaryKeyConstraint('id', 'item_id', 'complication_tag_id')
+    sa.PrimaryKeyConstraint('item_id', 'complication_tag_id')
     )
     op.create_table('item_drug_tag',
-    sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('item_id', sa.Integer(), nullable=False),
     sa.Column('drug_tag_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['drug_tag_id'], ['drug_tag.id'], ),
     sa.ForeignKeyConstraint(['item_id'], ['item.id'], ),
-    sa.PrimaryKeyConstraint('id', 'item_id', 'drug_tag_id')
+    sa.PrimaryKeyConstraint('item_id', 'drug_tag_id')
     )
     op.create_table('item_emotions_tag',
-    sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('item_id', sa.Integer(), nullable=False),
     sa.Column('emotions_tag_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['emotions_tag_id'], ['emotions_tag.id'], ),
     sa.ForeignKeyConstraint(['item_id'], ['item.id'], ),
-    sa.PrimaryKeyConstraint('id', 'item_id', 'emotions_tag_id')
+    sa.PrimaryKeyConstraint('item_id', 'emotions_tag_id')
     )
     op.create_table('item_feel_tag',
-    sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('item_id', sa.Integer(), nullable=False),
     sa.Column('feel_tag_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['feel_tag_id'], ['feel_tag.id'], ),
     sa.ForeignKeyConstraint(['item_id'], ['item.id'], ),
-    sa.PrimaryKeyConstraint('id', 'item_id', 'feel_tag_id')
+    sa.PrimaryKeyConstraint('item_id', 'feel_tag_id')
     )
     op.create_table('item_foreboding_tag',
-    sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('item_id', sa.Integer(), nullable=False),
     sa.Column('foreboding_tag_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['foreboding_tag_id'], ['foreboding_tag.id'], ),
     sa.ForeignKeyConstraint(['item_id'], ['item.id'], ),
-    sa.PrimaryKeyConstraint('id', 'item_id', 'foreboding_tag_id')
+    sa.PrimaryKeyConstraint('item_id', 'foreboding_tag_id')
     )
     op.create_table('item_relief_pain_tag',
-    sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('item_id', sa.Integer(), nullable=False),
     sa.Column('reliefpain_tag_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['item_id'], ['item.id'], ),
     sa.ForeignKeyConstraint(['reliefpain_tag_id'], ['relief_pain_tag.id'], ),
-    sa.PrimaryKeyConstraint('id', 'item_id', 'reliefpain_tag_id')
+    sa.PrimaryKeyConstraint('item_id', 'reliefpain_tag_id')
     )
     op.create_table('item_treatment_tag',
-    sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('item_id', sa.Integer(), nullable=False),
     sa.Column('treatment_tag_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['item_id'], ['item.id'], ),
     sa.ForeignKeyConstraint(['treatment_tag_id'], ['treatment_tag.id'], ),
-    sa.PrimaryKeyConstraint('id', 'item_id', 'treatment_tag_id')
+    sa.PrimaryKeyConstraint('item_id', 'treatment_tag_id')
     )
     op.create_table('item_triggers_tag',
-    sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('item_id', sa.Integer(), nullable=False),
     sa.Column('triggers_tag_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['item_id'], ['item.id'], ),
     sa.ForeignKeyConstraint(['triggers_tag_id'], ['triggers_tag.id'], ),
-    sa.PrimaryKeyConstraint('id', 'item_id', 'triggers_tag_id')
+    sa.PrimaryKeyConstraint('item_id', 'triggers_tag_id')
     )
     # ### end Alembic commands ###
 
