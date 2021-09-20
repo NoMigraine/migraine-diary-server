@@ -1,4 +1,4 @@
 .mypy_cache
-app/.coverage
+.coverage
 htmlcov
-app/test.db
+test.db

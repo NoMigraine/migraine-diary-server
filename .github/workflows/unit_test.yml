@@ -18,5 +18,4 @@ jobs:
           POETRY_VIRTUALENVS_CREATE=false poetry install
           PYTHONPATH=/app
           flake8
-          cd app/
           sh tests-start.sh
