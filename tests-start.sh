@@ -11,4 +11,4 @@ alembic upgrade head
 python app/initial_data.py
 python app/tests_pre_start.py
 
-#bash ./scripts/test.sh "$@"
+bash ./scripts/test.sh "$@"

@@ -167,6 +167,7 @@ class BaseTag(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True, nullable=False)
     level = Column(Integer, nullable=True, comment="标签顺序等级")
+    owner = Column(Integer, nullable=True, comment="所有者")
 
 
 class FeelTag(BaseTag):

@@ -1,5 +1,7 @@
+import sentry_sdk
 import uvicorn
 from fastapi import FastAPI
+from sentry_sdk.integrations.asgi import SentryAsgiMiddleware
 from starlette.middleware.cors import CORSMiddleware
 
 from app.api.api_v1.api import api_router
@@ -23,6 +25,14 @@ def create_app():
 
     app.include_router(api_router, prefix=settings.API_V1_STR)
 
+    app = register_sentry(app)
+
+    return app
+
+
+def register_sentry(app: FastAPI):
+    sentry_sdk.init(dsn=settings.SENTRY_DSN, integrations=[])
+    app = SentryAsgiMiddleware(app)
     return app
 
 
